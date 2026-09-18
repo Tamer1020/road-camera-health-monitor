@@ -20,10 +20,6 @@ consumer of the feed rather than as a mood:
 
 ## See it in 10 seconds
 
-![Healthy versus blocked camera feed](docs/assets/demo-health-monitor.jpg)
-
-*Actual annotated output from the repository's reproducible synthetic evaluation corpus: a healthy frame on the left, and a partial camera obstruction classified as `UNUSABLE` on the right. This is controlled fault injection, not field validation.*
-
 **What the system does:** calibrate a known-healthy camera → measure every frame → detect blur / exposure / low contrast / occlusion / freeze / movement / shake → apply temporal persistence → emit an operational status and machine-readable reports.
 
 ```mermaid
