@@ -16,6 +16,32 @@ consumer of the feed rather than as a mood:
 | `DEGRADED` | Still usable, expect reduced accuracy — raise a maintenance ticket |
 | `UNUSABLE` | Suspend analytics for this camera until it is fixed |
 
+
+
+## See it in 10 seconds
+
+![Healthy versus blocked camera feed](docs/assets/demo-health-monitor.jpg)
+
+*Actual annotated output from the repository's reproducible synthetic evaluation corpus: a healthy frame on the left, and a partial camera obstruction classified as `UNUSABLE` on the right. This is controlled fault injection, not field validation.*
+
+**What the system does:** calibrate a known-healthy camera → measure every frame → detect blur / exposure / low contrast / occlusion / freeze / movement / shake → apply temporal persistence → emit an operational status and machine-readable reports.
+
+```mermaid
+flowchart LR
+    A[Healthy commissioning clip] --> B[Calibrate baseline]
+    B --> C[Per-camera baseline]
+    D[New road-camera video] --> E[Decode + preprocess]
+    C --> F[Health checks]
+    E --> G[Frame metrics]
+    G --> F
+    F --> H[Temporal persistence]
+    H --> I{Camera status}
+    I -->|OK| J[Analytics continue]
+    I -->|DEGRADED| K[Maintenance / reduced confidence]
+    I -->|UNUSABLE| L[Suspend analytics]
+    H --> M[Annotated video + CSV + JSON + logs]
+```
+
 ---
 
 ## 1. Problem statement
@@ -182,16 +208,26 @@ git clone https://github.com/Tamer1020/road-camera-health-monitor.git
 cd road-camera-health-monitor
 
 python -m venv .venv
-source .venv/bin/activate      # Windows: .venv\Scripts\activate
+source .venv/bin/activate      # Windows: .venv\\Scripts\\activate
 pip install -r requirements-dev.txt
 
-python scripts/make_sample_data.py
-road-health calibrate --input sample_data/road_healthy.mp4 --output sample_data/baseline.json
+# Generate a licence-free healthy road clip and controlled fault clips.
+python scripts/make_sample_data.py -o sample_data/road_clean.mp4 -n 400
+python scripts/make_eval_corpus.py
+
+# Calibrate from a known-healthy commissioning clip.
+road-health calibrate \
+  --input sample_data/eval/normal.mp4 \
+  --output sample_data/eval/baseline.json
+
+# Inspect a partial camera-obstruction example.
 road-health inspect-video \
-  --input sample_data/road_faulty.mp4 \
+  --input sample_data/eval/blocked_partial.mp4 \
   --output outputs/demo \
-  --baseline sample_data/baseline.json \
-  --config configs/default.yaml
+  --baseline sample_data/eval/baseline.json \
+  --config configs/default.yaml \
+  --camera-id ROAD-CAM-07 \
+  --no-status-exit
 
 pytest -q
 ```
