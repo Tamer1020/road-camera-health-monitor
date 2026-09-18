@@ -20,6 +20,10 @@ consumer of the feed rather than as a mood:
 
 ## See it in 10 seconds
 
+![Road Camera Health Monitor — real road-video examples](docs/road_camera_health_monitor_hero_final.jpg)
+
+*The healthy panel comes from a real road video. The blur and blocked panels are reproducible OpenCV transformations of the same real frame, used only to illustrate monitored fault states. Controlled benchmark results remain separate from real-world validation.*
+
 **What the system does:** calibrate a known-healthy camera → measure every frame → detect blur / exposure / low contrast / occlusion / freeze / movement / shake → apply temporal persistence → emit an operational status and machine-readable reports.
 
 ```mermaid
