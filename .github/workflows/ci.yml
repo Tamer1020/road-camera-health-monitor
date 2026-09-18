@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Unit tests
+        run: pytest tests -q
+      - name: Smoke test the documented quick start
+        run: |
+          python scripts/make_sample_data.py -o sample_data/road_clean.mp4 -n 150
+          road-health calibrate -i sample_data/road_clean.mp4 -o sample_data/baseline.json
+          road-health inspect-video \
+            -i sample_data/road_clean.mp4 \
+            -o outputs/ci_run \
+            -c configs/default.yaml \
+            -b sample_data/baseline.json \
+            --camera-id CI-CAM
+      - name: Verify the run produced every documented artefact
+        run: |
+          python - <<'PY'
+          import json, csv, sys
+          from pathlib import Path
+          run = Path("outputs/ci_run")
+          missing = [f for f in ("frame_metrics.csv", "events.json", "run_metadata.json", "run.log") if not (run / f).is_file()]
+          if not list(run.glob("annotated_video.*")):
+              missing.append("annotated_video.*")
+          if missing:
+              sys.exit(f"missing run artefacts: {missing}")
+          meta = json.loads((run / "run_metadata.json").read_text())
+          assert meta["benchmark"]["frames_read"] > 0, "no frames processed"
+          rows = list(csv.DictReader((run / "frame_metrics.csv").open()))
+          assert len(rows) == meta["benchmark"]["frames_analysed"]
+          assert json.loads((run / "events.json").read_text())["schema"] == "road-health/events/1"
+          print(f"OK: {len(rows)} frames, {meta['benchmark']['pipeline_fps_end_to_end']} fps end-to-end")
+          PY
+      - name: Upload run artefacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-run-py${{ matrix.python-version }}
+          path: outputs/ci_run
+          retention-days: 7
+
+  evaluation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Build corpus and evaluate
+        run: |
+          python scripts/make_sample_data.py -o sample_data/road_clean.mp4 -n 400
+          python scripts/make_eval_corpus.py
+          road-health calibrate -i sample_data/eval/normal.mp4 -o sample_data/eval/baseline.json
+          python scripts/run_evaluation.py --baseline-mode file
+      - name: Enforce the published thresholds
+        run: |
+          python - <<'PY'
+          import json, sys
+          from pathlib import Path
+          s = json.loads(Path("outputs/evaluation/file/summary.json").read_text())
+          fails = []
+          normal = s["per_clip"]["normal"]
+          if normal["false_alarm_events"] > 0:
+              fails.append(f"{normal['false_alarm_events']} false alarms on the clean clip")
+          for clip, e in s["per_clip"].items():
+              if e["condition"] is None:
+                  continue
+              if e["recall_steady_state"] < 0.95:
+                  fails.append(f"{clip}: steady-state recall {e['recall_steady_state']}")
+              if e["detect_latency_frames"] is None:
+                  fails.append(f"{clip}: not detected at all")
+          if fails:
+              sys.exit("evaluation regressions:\n  " + "\n  ".join(fails))
+          print("evaluation thresholds met")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evaluation-report
+          path: outputs/evaluation
+          retention-days: 30
