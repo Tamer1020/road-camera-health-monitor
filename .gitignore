@@ -1,0 +1,30 @@
+# Run artefacts - regenerate with scripts/, never commit
+outputs/
+sample_data/*.mp4
+sample_data/*.avi
+sample_data/eval/
+!sample_data/.gitkeep
+
+# Never commit third-party footage. Real road video is almost never
+# redistributable; keep it outside the repo and point --input at it.
+data/
+*.mkv
+*.mov
+*.ts
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
