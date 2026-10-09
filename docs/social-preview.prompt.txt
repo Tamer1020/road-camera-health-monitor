@@ -1,0 +1,7 @@
+Generated with the built-in imagegen tool on 2026-10-09.
+Purpose: repository branding only; this image is not experimental evidence.
+Output: 1774 x 887 px (2:1), re-encoded as JPEG to meet GitHub's 1 MB limit.
+The requested pixel dimensions below were not returned exactly by the tool.
+
+Prompt:
+Use case: ads-marketing. Asset type: polished GitHub repository social preview cover, exactly 1280 x 640 pixels, 2:1 landscape. Create a restrained, professional editorial technology cover for an open-source computer vision engineering portfolio. Dark midnight navy background, subtle fine grid, sophisticated clean sans-serif typography, teal and pale blue accent lines. Leave wide safe margins on every side (at least 90px) so the content will not crop. Exact title in large white text across two lines: "Road Camera" then "Health Monitor". Beneath it exact subtitle in smaller pale gray text: "Camera reliability for perception pipelines". At the bottom left exact small text: "Python / OpenCV / NumPy". A tasteful abstract camera lens and focus brackets on the right, with three understated colored dots in green amber red. No photographic road images, no sample frames, no charts, no numbers, no metrics, no badges, no claims of deployment, no extra text, no watermark. This is purely project branding, not experimental evidence. High contrast, ample whitespace, impeccable type alignment and legibility at thumbnail size. All title and subtitles must be fully within the safe margins. Opaque background.
