@@ -1,5 +1,13 @@
 # Evaluation
 
+[Project overview](../README.md) · [Design reference](DESIGN.md)
+
+**Evidence scope:** the numerical results below are the previously documented
+synthetic-corpus results and container benchmark. Reorganizing the portfolio does
+not add a new measurement or real-world validation result. Thresholds were selected
+on this corpus. Each clip is 16 seconds long; the clean-clip observation therefore
+covers 16 seconds, not prolonged operation.
+
 Everything in this document is reproducible with:
 
 ```bash
@@ -19,9 +27,9 @@ Raw output: `outputs/evaluation/{file,auto}/summary.json` and `report.md`.
 
 Two reasons, neither of them convenience:
 
-1. **Licensing.** Public road and traffic footage is almost never
-   redistributable. Committing it to a public repository is a legal problem,
-   not a technical one.
+1. **Redistribution.** A generated corpus can be shared without depending on
+   third-party video permissions. External recordings require their own rights
+   review and are kept outside the repository.
 2. **Ground truth and controllability.** Scoring precision and recall requires
    a label on *every frame*. With scraped footage that means hand-annotation,
    and even then the onset of a gradual defocus is a judgement call. A
@@ -71,15 +79,20 @@ configured temporal hold-down have elapsed. Before that point the fault may
 still be sub-threshold and the de-bouncer is deliberately designed not to raise
 an event.
 
-**Detection latency** is the number of frames between the first genuinely bad
-frame and the alarm. It is compared against the configured hold-down, which is
-a floor on latency by construction.
+**Detection latency** is the number of frames from the labelled start of the
+injected fault window to the first active alarm inside that window, as implemented
+in `scripts/run_evaluation.py`. It includes the effect of the ramp and temporal
+hold-down; it is not latency measured only after a rule first flags a bad frame.
 
-**False positives** exclude the designed recovery tail, because the
-de-bouncer intentionally takes `exit_seconds` to clear.
+**The FP frames column** counts active frames outside both the labelled fault
+window and an allowed recovery tail. The scoring script allows
+`exit_frames + RAMP_FRAMES` after the fault ends for this specific count.
 
-Whole-window precision/recall are still reported for completeness, but they
-are structurally lower because ramp-in and recovery-tail frames are included.
+**Whole-window precision and recall** use the entire labelled fault window.
+Precision counts active frames outside that window as false positives, including
+the recovery tail; recall counts inactive frames inside the window as misses,
+including ramp and hold-down. These metrics therefore differ from the steady-state
+recall and recovery-adjusted FP-frame count. The full table retains all of them.
 
 All scoring uses the **post-temporal** state (`active_*` columns), not raw
 per-frame flags. What an operator sees is the de-bounced state.
@@ -126,8 +139,10 @@ active:
 | blur_from_start | **0.88** | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | shake | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | **0.56** |
 
-The matrix is strictly diagonal. Diagonal values are below 1.0 because they
-include ramp-in and temporal hold-down frames.
+Only each clip's target condition is active in its fault window on this corpus;
+there is no off-target activity. This is a clip-by-condition activity table, not
+a normalized multiclass accuracy matrix. Values below 1.0 include ramp-in and
+temporal hold-down frames.
 
 ### Failure-driven fixes
 
@@ -266,7 +281,7 @@ on held-out real data.
 
 - Every implemented rule fires on its target synthetic phenomenon.
 - Steady-state recall is 1.0 on the controlled corpus.
-- Cross-condition activity is diagonal after reliability gating.
+- No off-target condition is active inside the synthetic fault windows after reliability gating.
 - The clean clip produces zero false-alarm events.
 - Detection latency is dominated by the configured temporal hold-down.
 - Per-camera calibration provides information that auto-baselining cannot
@@ -302,7 +317,12 @@ not production accuracy.
 
 ## 10. Benchmark
 
-Single container core, 640×360 @ 25 fps, 400 frames, OpenCV 4.13.
+Reported container benchmark: 640×360 @ 25 fps, 400 frames, OpenCV 4.13.
+The earlier description called this a single-core run, but the published table
+does not identify the CPU model, enforced core allocation, or OpenCV thread limit.
+The benchmark script explicitly notes that OpenCV may use internal threading.
+The figures below are retained as reported throughput, not evidence of a verified
+single-core limit or performance on a particular Edge device.
 
 | Configuration | Source fps | Analysis-only fps | × realtime |
 |---|---:|---:|---:|
