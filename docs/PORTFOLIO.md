@@ -3,7 +3,8 @@
 [Project overview](../README.md) · [Demo guide](DEMO.md)
 
 Copy, presentation choices, and publishing status for the GitHub repository and
-a short portfolio entry. The demo recording remains a separate deliverable.
+a short portfolio entry. The [finished 60-second demo](DEMO.md) is linked from
+the README with its capture provenance and reproduction commands.
 
 ## Positioning
 
@@ -30,15 +31,14 @@ models belong in future-work text until implemented and measured.
 ## First-screen order
 
 1. Title, one-sentence purpose, and the current CI badge.
-2. The existing healthy/blur/blocked illustration with its injection disclosure.
-3. A demo link once a real recording is published.
+2. The embedded 60-second demo and its synthetic-source disclosure.
+3. Direct video, MP4, and reproduction/evidence links.
 4. A compact results table with metric definitions and benchmark scope.
 5. Calibration and persistence decisions, followed by quick-start commands.
 6. Boundaries and the next validation steps, with detailed reference links.
 
-The repository README follows this structure, with the recording guide in place
-of an unpublished-video link. The About description, topics, social preview, and
-profile pin have also been applied through GitHub settings.
+The repository README follows this structure. The About description, topics,
+social preview, and profile pin have also been applied through GitHub settings.
 
 ## GitHub landing-page actions
 
@@ -46,11 +46,11 @@ profile pin have also been applied through GitHub settings.
 |---|---|
 | About description | Uses the description above |
 | Topics | Uses the implementation topics above |
-| Website field | Link the finished demo or a project case study once available; otherwise leave it empty |
+| Website field | Left empty; the working demo is embedded directly in the README |
 | Profile pins | Pinned among the first two projects on the profile |
 | Social preview | Uses the project title, perception subtitle, and an abstract camera graphic |
 | Sidebar | Empty Releases and Packages sections are hidden |
-| README top links | Link to the published demo when it exists; retain direct links to evaluation and quick start |
+| README top links | Links to the published demo, evaluation, and quick start |
 | Evidence access | Link generated evaluation reports and benchmark metadata from a future tagged release after reproducing them |
 
 The [social preview](social-preview.jpg) uses a 2:1 canvas and wide safe margins
@@ -58,8 +58,9 @@ so its title remains readable without cropping. It is an AI-generated branding
 graphic made with the built-in imagegen tool, not a camera frame or evaluation
 artifact; the [generation prompt](social-preview.prompt.txt) is included.
 It contains no performance metrics or deployment claims. The existing
-[README illustration](road_camera_health_monitor_hero_final.jpg) remains separate,
-with its real-frame/injected-fault disclosure.
+[three-panel illustration](road_camera_health_monitor_hero_final.jpg) remains
+separate from the demo, with its real-frame/injected-fault disclosure in the
+[demo guide](DEMO.md#separate-illustration).
 
 ## What each hiring audience can inspect
 
@@ -93,12 +94,12 @@ gates; real-camera validation and target Edge-device measurements remain open.
 
 - [x] Apply the About description and topics.
 - [x] Set a social preview with no unqualified result claims.
-- [ ] Record the [demo](DEMO.md) from actual output videos.
-- [ ] Add its working URL to the README and, if suitable, the Website field.
+- [x] Record the [demo](DEMO.md) from actual output videos.
+- [x] Add the finished video and its evidence/reproduction links to the README.
 - [x] Pin the repository among the first two projects on the profile.
 - [x] Hide the empty Releases and Packages sidebar sections.
 - [ ] For a later evidence release, record the commit, config, dependency versions,
       host details, and generated JSON/Markdown results together.
 
-Completed settings were verified on GitHub on 2026-10-09. Recording and publishing
-the demo, and producing a versioned evidence release, remain open.
+Settings and the demo were published on 2026-10-09. A versioned full-evaluation
+evidence release remains separate future work.

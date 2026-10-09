@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:05,000
+Camera-health monitoring with OpenCV and NumPy.
+Synthetic scene + injected faults.
+
+2
+00:00:05,000 --> 00:00:11,520
+Blur develops at source t = 6.00 s.
+The alarm waits for persistent evidence.
+
+3
+00:00:11,520 --> 00:00:19,000
+Partial obstruction removes local texture.
+The actual output highlights the affected tiles.
+
+4
+00:00:19,000 --> 00:00:25,000
+Frozen frames: the image stops while timestamps advance.
+The monitor raises an UNUSABLE event.
+
+5
+00:00:25,000 --> 00:00:35,000
+Same startup blur, same source timestamps.
+A healthy reference detects it; auto-baselining can learn it as normal.
+
+6
+00:00:35,000 --> 00:00:43,000
+Events and frame metrics are exported as JSON and CSV.
+The values shown come from this demo run.
+
+7
+00:00:43,000 --> 00:00:54,000
+Previously reported results, with their scope.
+Synthetic development corpus; no claim of real-world accuracy.
+
+8
+00:00:54,000 --> 00:01:00,000
+Code, evaluation and reproduction instructions on GitHub.
+Real-camera and target Edge-device validation are future work.

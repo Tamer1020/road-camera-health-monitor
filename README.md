@@ -2,7 +2,7 @@
 ### Camera reliability for perception pipelines
 
 [![CI](https://github.com/Tamer1020/road-camera-health-monitor/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Tamer1020/road-camera-health-monitor/actions/workflows/ci.yml)
-[Evaluation](docs/EVALUATION.md) · [Quick start](#quick-start) · [Design](docs/DESIGN.md) · [Demo guide](docs/DEMO.md)
+[Watch demo](#60-second-demo) · [Evaluation](docs/EVALUATION.md) · [Quick start](#quick-start) · [Design](docs/DESIGN.md)
 
 An OpenCV and NumPy pipeline that detects camera degradation in recorded road
 video and emits persistent fault events, annotated video, and CSV/JSON reports.
@@ -12,11 +12,15 @@ or GPU is required.
 **Purpose:** give downstream detection, tracking, and traffic analytics a
 camera-health signal they can inspect before relying on the images.
 
-![Illustration of healthy, blurred, and blocked road-camera images](docs/road_camera_health_monitor_hero_final.jpg)
+## 60-second demo
 
-*Illustration: the healthy panel is a real road-video frame; blur and obstruction
-are injected OpenCV transformations of that frame. This image is separate from
-the synthetic evaluation below and does not establish real-world performance.*
+https://github.com/user-attachments/assets/54c06913-7894-4275-a542-194573580871
+
+**[Open video](https://github.com/user-attachments/assets/54c06913-7894-4275-a542-194573580871) · [MP4 file](docs/demo/road-camera-health-demo.mp4).** Actual pipeline
+outputs: blur, obstruction, frozen frames, and a synchronized baseline comparison.
+*Synthetic scene + injected faults; 1× playback, with on-screen explanations.
+This is a demonstration, not real-world validation or a new benchmark.*
+[Reproduce the video and inspect its evidence](docs/DEMO.md).
 
 ## Results at a glance
 
@@ -191,7 +195,7 @@ These are future tasks, not current capabilities or measured results.
 |---|---|
 | [Design reference](docs/DESIGN.md) | Calibration, rules, temporal logic, CLI, and failure cases |
 | [Evaluation report](docs/EVALUATION.md) | Corpus, scoring definitions, per-clip results, sweeps, and benchmark |
-| [Demo guide](docs/DEMO.md) | Reproducible recording commands and a 60-second storyboard |
+| [Demo and reproduction](docs/DEMO.md) | Finished 60-second video, capture provenance, captions, and rendering commands |
 | [Portfolio presentation](docs/PORTFOLIO.md) | GitHub About copy, topics, social preview, and publishing checklist |
 | [Default config](configs/default.yaml) | Thresholds and hold-down times |
 | [Source](src/road_health) / [tests](tests) | Implementation and regression coverage |
@@ -206,3 +210,4 @@ the synthetic corpus; they do not establish field performance.
 ## License
 
 MIT. See [LICENSE](LICENSE).
+

@@ -1,0 +1,231 @@
+{
+  "purpose": "Demonstration capture, not a new benchmark or real-world validation",
+  "source_revision": "a79c134678911aec8155cfc5b3c1fa6ae7447ba3",
+  "config_path": "configs/default.yaml",
+  "config_sha256": "af000f8ea3f3afe384928ebd5a9a8459eaed32ec92a2d568a8e7afc6ae19ac9b",
+  "source_scene_seed": 7,
+  "corruption_seed": 11,
+  "source_dimensions": [
+    640,
+    360
+  ],
+  "source_fps": 25,
+  "frames_per_source_clip": 400,
+  "output_dimensions": [
+    1280,
+    720
+  ],
+  "output_fps": 25,
+  "output_frames": 1500,
+  "output_duration_s": 60.0,
+  "audio": "none; captions and on-screen text",
+  "playback": "1x within every moving excerpt; explicit chapter cuts between cases",
+  "auto_baseline": "Offline pre-pass learns from first 100 frames (4 s), then inspection starts at frame 0",
+  "historical_result_source": "docs/EVALUATION.md at source_revision; not runtime measurements of this capture",
+  "shots": [
+    {
+      "demo_start_frame": 0,
+      "demo_end_frame_exclusive": 125,
+      "clip": "normal",
+      "source_start_frame": 0,
+      "source_end_frame_exclusive": 125
+    },
+    {
+      "demo_start_frame": 125,
+      "demo_end_frame_exclusive": 288,
+      "clip": "blur",
+      "source_start_frame": 125,
+      "source_end_frame_exclusive": 288
+    },
+    {
+      "demo_start_frame": 288,
+      "demo_end_frame_exclusive": 475,
+      "clip": "blocked_partial",
+      "source_start_frame": 125,
+      "source_end_frame_exclusive": 312
+    },
+    {
+      "demo_start_frame": 475,
+      "demo_end_frame_exclusive": 625,
+      "clip": "frozen",
+      "source_start_frame": 125,
+      "source_end_frame_exclusive": 275
+    },
+    {
+      "demo_start_frame": 625,
+      "demo_end_frame_exclusive": 875,
+      "clips": [
+        "blur_from_start",
+        "auto"
+      ],
+      "source_start_frame": 0,
+      "source_end_frame_exclusive": 250
+    }
+  ],
+  "captures": {
+    "normal": {
+      "folder": "outputs/demo_capture/file/normal",
+      "annotated_video_sha256": "32606d1e61ee5f659896056efd8526c012f02b11c9b75e09a08678847fdf56ab",
+      "frame_metrics_sha256": "8446337f87966bda76b0c59fda859fc16e0e2d2032833742f137e5911f3e2214",
+      "events_sha256": "9ecab4b9e39436870c74d22a1869c736d508ba9ec0a82d9bcec31d556e41b860",
+      "run_started_utc": "2026-10-09T21:46:05+00:00",
+      "baseline_source": "file:sample_data/eval/baseline.json",
+      "tool": {
+        "name": "road-health",
+        "version": "0.1.0",
+        "opencv": "4.14.0",
+        "numpy": "2.3.5",
+        "python": "3.12.14",
+        "platform": "Linux-6.18.44-x86_64-with-glibc2.39"
+      },
+      "state_transitions": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "status": "OK"
+        }
+      ]
+    },
+    "blur": {
+      "folder": "outputs/demo_capture/file/blur",
+      "annotated_video_sha256": "bbdbfdbd7115bf039462628f620e885752dc14ece611d41f5cca6e904cc96d17",
+      "frame_metrics_sha256": "ff4a7905bf82c8cbffc33720d5bdbed5b4ef2280c72e8616921e3c1291159d8c",
+      "events_sha256": "89773fe3e8008690943daec8ab404e755bdaa81817b3ea7faf28377008cfef13",
+      "run_started_utc": "2026-10-09T21:46:13+00:00",
+      "baseline_source": "file:sample_data/eval/baseline.json",
+      "tool": {
+        "name": "road-health",
+        "version": "0.1.0",
+        "opencv": "4.14.0",
+        "numpy": "2.3.5",
+        "python": "3.12.14",
+        "platform": "Linux-6.18.44-x86_64-with-glibc2.39"
+      },
+      "state_transitions": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "status": "OK"
+        },
+        {
+          "frame_index": 201,
+          "timestamp_s": 8.04,
+          "status": "DEGRADED"
+        }
+      ]
+    },
+    "blocked_partial": {
+      "folder": "outputs/demo_capture/file/blocked_partial",
+      "annotated_video_sha256": "d223b5acf3e79bda5682a23f697e1b0bfd1fa4f1d2897c14fd2e82d788db3056",
+      "frame_metrics_sha256": "368cb173641f57fa14df0671c5ad25f11b14f130108a23c97b1b8a11a48794d1",
+      "events_sha256": "b64c15923d7451b87dcc6adb5c0fd56386f7da16b4d667ce233153832456a1cb",
+      "run_started_utc": "2026-10-09T21:46:22+00:00",
+      "baseline_source": "file:sample_data/eval/baseline.json",
+      "tool": {
+        "name": "road-health",
+        "version": "0.1.0",
+        "opencv": "4.14.0",
+        "numpy": "2.3.5",
+        "python": "3.12.14",
+        "platform": "Linux-6.18.44-x86_64-with-glibc2.39"
+      },
+      "state_transitions": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "status": "OK"
+        },
+        {
+          "frame_index": 235,
+          "timestamp_s": 9.4,
+          "status": "UNUSABLE"
+        }
+      ]
+    },
+    "frozen": {
+      "folder": "outputs/demo_capture/file/frozen",
+      "annotated_video_sha256": "7f6c8f0210ae9be4eb4b3816c0b43a61dfe19c6c5c35880d8b75baa82258c940",
+      "frame_metrics_sha256": "9711e83d4c048ef23c7837de49ef011344df6eeeb68a9899680f3a4d7359b92a",
+      "events_sha256": "e79cdfd1e73669bb0402f10597c8fc7e94162dba13df0e3e732835312e7172e8",
+      "run_started_utc": "2026-10-09T21:46:29+00:00",
+      "baseline_source": "file:sample_data/eval/baseline.json",
+      "tool": {
+        "name": "road-health",
+        "version": "0.1.0",
+        "opencv": "4.14.0",
+        "numpy": "2.3.5",
+        "python": "3.12.14",
+        "platform": "Linux-6.18.44-x86_64-with-glibc2.39"
+      },
+      "state_transitions": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "status": "OK"
+        },
+        {
+          "frame_index": 202,
+          "timestamp_s": 8.08,
+          "status": "UNUSABLE"
+        },
+        {
+          "frame_index": 355,
+          "timestamp_s": 14.2,
+          "status": "OK"
+        }
+      ]
+    },
+    "blur_from_start": {
+      "folder": "outputs/demo_capture/file/blur_from_start",
+      "annotated_video_sha256": "0fd3f8a50a16bfd8a79afbb218f7411926b170c35ae846860e2ca495f46ab6f0",
+      "frame_metrics_sha256": "ceb3fd3bcb8ece7f4d221ed4cbbd9f9943e6c417afbcf6c6fa74995739b04e52",
+      "events_sha256": "a66927e19c65bd5c2304036c341d27970b0e17d386004fe5eb1e7c624556dfc5",
+      "run_started_utc": "2026-10-09T21:46:38+00:00",
+      "baseline_source": "file:sample_data/eval/baseline.json",
+      "tool": {
+        "name": "road-health",
+        "version": "0.1.0",
+        "opencv": "4.14.0",
+        "numpy": "2.3.5",
+        "python": "3.12.14",
+        "platform": "Linux-6.18.44-x86_64-with-glibc2.39"
+      },
+      "state_transitions": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "status": "OK"
+        },
+        {
+          "frame_index": 49,
+          "timestamp_s": 1.96,
+          "status": "DEGRADED"
+        }
+      ]
+    },
+    "auto": {
+      "folder": "outputs/demo_capture/auto/blur_from_start",
+      "annotated_video_sha256": "a2a113a58a9bc7d812cb30679c1d43781803f6c69b24d606815f828dbe30365d",
+      "frame_metrics_sha256": "574731f251ba0646552f1bf73040a7d79c8c26f4eb21d52ad0bfaedce2034253",
+      "events_sha256": "0e14fb36c80a4b7b36700eb67b1293f598aa69c5e568a7d11658a96d2a881c25",
+      "run_started_utc": "2026-10-09T21:46:48+00:00",
+      "baseline_source": "auto:first 100 frames (~4.0s)",
+      "tool": {
+        "name": "road-health",
+        "version": "0.1.0",
+        "opencv": "4.14.0",
+        "numpy": "2.3.5",
+        "python": "3.12.14",
+        "platform": "Linux-6.18.44-x86_64-with-glibc2.39"
+      },
+      "state_transitions": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  "output_sha256": "8cdc51595a6446f880c636cfdede8df022c9412f6b782387bccbc7ed33585423"
+}

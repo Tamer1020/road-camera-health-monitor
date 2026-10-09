@@ -1,0 +1,38 @@
+{
+  "schema": "road-health/events/1",
+  "generated_utc": "2026-10-09T21:46:22+00:00",
+  "summary": {
+    "frames_analysed": 400,
+    "status_frames": {
+      "OK": 235,
+      "UNUSABLE": 165
+    },
+    "status_fraction": {
+      "OK": 0.5875,
+      "UNUSABLE": 0.4125
+    },
+    "usable_fraction": 0.5875,
+    "condition_active_frames": {
+      "blocked": 165
+    },
+    "n_events": 1
+  },
+  "events": [
+    {
+      "condition": "blocked",
+      "severity": "UNUSABLE",
+      "start_frame": 161,
+      "start_time_s": 6.44,
+      "end_frame": 399,
+      "end_time_s": 15.96,
+      "duration_s": 9.52,
+      "n_bad_frames": 170,
+      "peak_value": 0.375,
+      "threshold": 0.35,
+      "detection_latency_frames": 74,
+      "co_active": [],
+      "first_detail": "dead_tiles=0.38 thr=0.35 std_luma=45.1",
+      "ongoing": true
+    }
+  ]
+}

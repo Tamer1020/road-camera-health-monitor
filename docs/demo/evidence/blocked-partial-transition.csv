@@ -1,0 +1,6 @@
+frame_index,timestamp_s,status,active_blocked
+233,9.32,OK,0
+234,9.36,OK,0
+235,9.4,UNUSABLE,1
+236,9.44,UNUSABLE,1
+237,9.48,UNUSABLE,1
